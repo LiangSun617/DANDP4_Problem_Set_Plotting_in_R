@@ -44,7 +44,7 @@ summary(mar05)
 ``` {r}
 library(ggplot2)
 ggplot(aes(x = mar05), data = mar05) +
-      labs(x = "Age of Marriage in 2005") +
+      labs(x = "Average age of marriage in 2005") +
   geom_histogram(binwidth = 1, color = 'black', fill = 'blue') +
   scale_x_continuous(breaks = 17:34)
 ```
@@ -76,6 +76,8 @@ Draw the plot:
 ```{r}
 qplot(x = time, y = year,
       data = two_data,
+      xlab = 'Year',
+      ylab = 'Average age of marriage',
       geom = 'boxplot') +
       scale_y_continuous(limits = c(20, 30))  
 ```
