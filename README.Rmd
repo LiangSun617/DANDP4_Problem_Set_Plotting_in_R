@@ -1,74 +1,104 @@
+### Lesson 4 Problem Set: Gapminder Data
+#### Author: Liang Sun
+#### Date: June 14, 2017
 ---
-title: "Lesson 4 Problem Set: Gapminder Data"
-author: Liang Sun
-date: June 14, 2017
----
 
+From Gapminder I downloaded the data file  on the average age of marriage of countries over time.
 
-
+#### 1. Preparing data
+Read data file in R:
 ```{r}
 getwd()
 list.files()
- 
+
 marriage <- read.csv('age of marriage.csv', header = TRUE)
+```
 
+Check the variable names in the data file:
+``` {r}
 names(marriage)
-#column names have "X"
+```
+![data1](image\1.png)
 
-#remove "X" from col names
+Column names have "X" as prefix, so need to remove "X" from col names:
+```{r}
 names(marriage) <- gsub("X", "", names(marriage), fixed = TRUE)
 # the first column is country
 colnames(marriage)[1] <- "country"
+```
+
+![data2](image\2.png)
 
 
-#Need to do data wrangling
+Before start drawing graphs, we need to do some data wrangling work, because there are many missing values in these yearly data:
 
+```{r}
 mar05 <- na.omit(marriage['2005'])
-#check the summary statistics of this column
 summary(mar05)
+```
+![data3](image\3.png)
 
-#create a histogram: the age of marriage in 2005 by country
+---
+#### 2. Creating plots
+- Create a histogram: the average age of marriage by country in 2005.
+``` {r}
 library(ggplot2)
 ggplot(aes(x = mar05), data = mar05) +
       labs(x = "Age of Marriage in 2005") +
   geom_histogram(binwidth = 1, color = 'black', fill = 'blue') +
   scale_x_continuous(breaks = 17:34)
+```
+
+![hist](image\marriageHistogram.png)
 
 
-#create a boxplot over two years: very few years have many valid values
+- Create a boxplot over two years: very few years have many valid values.
+
+```{r}
 years <- c('country','1970', '2005')
 
 two_data <- na.omit(marriage[years])
 
 colnames(two_data)[2] <- 'year_1970'
 colnames(two_data)[3] <- 'year_2005'
-
-#reshape into long format so as to draw plot of two years
+```
+Reshape into long format so as to draw plot of two years:
+```{r}
 two_data <- reshape(two_data, varying = c('year_1970', 'year_2005'),
                     idvar = 'country', direction = 'long', sep = '_')
-
-#change time into a factor variable so as to compare two years
+```
+Then need to change time into a factor variable so as to compare two years:
+```{r}
 two_data$time <- as.factor(two_data$time)
+```
 
+Draw the plot:
+```{r}
 qplot(x = time, y = year,
       data = two_data,
       geom = 'boxplot') +
       scale_y_continuous(limits = c(20, 30))  
+```
 
+![box](image\marriageBoxplot.png)
 
+- Create a frequency polygon:
 
-#create a frequency polygon
-
+```{r}
 qplot(x = year, y = ..count..,
       data = two_data,
       xlab = 'Age of Marriage',
       ylab = 'Count of Countries',
       binwidth = 10, geom = 'freqpoly', color = time) +
   coord_cartesian(xlim = c(15, 35))
-
-
-
-
-
-
 ```
+![poly](image\marriageFreqpoly.png)
+
+---
+#### 3.Discussion
+
+- If we look at 2005 data only, the average age of marriage in most countries is between 22 and 27 years old. However, we cannot interpret much meaning based on only one-year data.
+
+- By comparing 1970 and 2005 data in boxplot and frequency polygon, it is obvious that the average age of marriage has grown over time for all countries.
+
+- Nevertheless, the data are quite flawed in the sense that many countries have missing values in many years. The findings here may be not representative enough of the world.
