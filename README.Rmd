@@ -1,0 +1,74 @@
+---
+title: "Lesson 4 Problem Set: Gapminder Data"
+author: Liang Sun
+date: June 14, 2017
+---
+
+
+
+```{r}
+getwd()
+list.files()
+ 
+marriage <- read.csv('age of marriage.csv', header = TRUE)
+
+names(marriage)
+#column names have "X"
+
+#remove "X" from col names
+names(marriage) <- gsub("X", "", names(marriage), fixed = TRUE)
+# the first column is country
+colnames(marriage)[1] <- "country"
+
+
+#Need to do data wrangling
+
+mar05 <- na.omit(marriage['2005'])
+#check the summary statistics of this column
+summary(mar05)
+
+#create a histogram: the age of marriage in 2005 by country
+library(ggplot2)
+ggplot(aes(x = mar05), data = mar05) +
+      labs(x = "Age of Marriage in 2005") +
+  geom_histogram(binwidth = 1, color = 'black', fill = 'blue') +
+  scale_x_continuous(breaks = 17:34)
+
+
+#create a boxplot over two years: very few years have many valid values
+years <- c('country','1970', '2005')
+
+two_data <- na.omit(marriage[years])
+
+colnames(two_data)[2] <- 'year_1970'
+colnames(two_data)[3] <- 'year_2005'
+
+#reshape into long format so as to draw plot of two years
+two_data <- reshape(two_data, varying = c('year_1970', 'year_2005'),
+                    idvar = 'country', direction = 'long', sep = '_')
+
+#change time into a factor variable so as to compare two years
+two_data$time <- as.factor(two_data$time)
+
+qplot(x = time, y = year,
+      data = two_data,
+      geom = 'boxplot') +
+      scale_y_continuous(limits = c(20, 30))  
+
+
+
+#create a frequency polygon
+
+qplot(x = year, y = ..count..,
+      data = two_data,
+      xlab = 'Age of Marriage',
+      ylab = 'Count of Countries',
+      binwidth = 10, geom = 'freqpoly', color = time) +
+  coord_cartesian(xlim = c(15, 35))
+
+
+
+
+
+
+```
