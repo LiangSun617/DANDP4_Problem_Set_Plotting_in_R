@@ -18,7 +18,7 @@ Check the variable names in the data file:
 ``` {r}
 names(marriage)
 ```
-![data1](image\1.png)
+![data1](/image/1.png)
 
 Column names have "X" as prefix, so need to remove "X" from col names:
 ```{r}
@@ -27,7 +27,7 @@ names(marriage) <- gsub("X", "", names(marriage), fixed = TRUE)
 colnames(marriage)[1] <- "country"
 ```
 
-![data2](image\2.png)
+![data2](/image/2.png)
 
 
 Before start drawing graphs, we need to do some data wrangling work, because there are many missing values in these yearly data:
@@ -36,7 +36,7 @@ Before start drawing graphs, we need to do some data wrangling work, because the
 mar05 <- na.omit(marriage['2005'])
 summary(mar05)
 ```
-![data3](image\3.png)
+![data3](/image/3.png)
 
 ---
 #### 2. Creating plots
@@ -49,7 +49,7 @@ ggplot(aes(x = mar05), data = mar05) +
   scale_x_continuous(breaks = 17:34)
 ```
 
-![hist](image\marriageHistogram.png)
+![hist](/image/marriageHistogram.png)
 
 
 - Create a boxplot over two years: very few years have many valid values.
@@ -80,7 +80,7 @@ qplot(x = time, y = year,
       scale_y_continuous(limits = c(20, 30))  
 ```
 
-![box](image\marriageBoxplot.png)
+![box](/image/marriageBoxplot.png)
 
 - Create a frequency polygon:
 
@@ -92,7 +92,7 @@ qplot(x = year, y = ..count..,
       binwidth = 10, geom = 'freqpoly', color = time) +
   coord_cartesian(xlim = c(15, 35))
 ```
-![poly](image\marriageFreqpoly.png)
+![poly](/image/marriageFreqpoly.png)
 
 ---
 #### 3.Discussion
