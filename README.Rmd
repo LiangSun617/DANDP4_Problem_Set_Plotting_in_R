@@ -26,7 +26,6 @@ names(marriage) <- gsub("X", "", names(marriage), fixed = TRUE)
 # the first column is country
 colnames(marriage)[1] <- "country"
 ```
-
 ![data2](/image/2.png)
 
 
