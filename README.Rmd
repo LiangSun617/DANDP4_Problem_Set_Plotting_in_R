@@ -47,7 +47,7 @@ ggplot(aes(x = mar05), data = mar05) +
   geom_histogram(binwidth = 1, color = 'black', fill = 'blue') +
   scale_x_continuous(breaks = 17:34)
 ```
-![box](/image/marriageHistogram.png)
+<img src = 'image/marriageHistogram.png', width = 600>
 
 - Create a boxplot over two years: very few years have many valid values.
 
@@ -78,8 +78,8 @@ qplot(x = time, y = year,
       geom = 'boxplot') +
       scale_y_continuous(limits = c(20, 30))  
 ```
-![box](/image/marriageBoxplot.png)
 
+<img src = 'image/marriageBoxplot.png', width = 600>
 
 - Create a frequency polygon:
 
@@ -91,7 +91,8 @@ qplot(x = year, y = ..count..,
       binwidth = 10, geom = 'freqpoly', color = time) +
   coord_cartesian(xlim = c(15, 35))
 ```
-![poly](/image/marriageFreqpoly.png)
+
+<img src = 'image/marriageFreqpoly.png', width = 600>
 
 ---
 #### 3.Discussion
