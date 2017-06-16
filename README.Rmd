@@ -79,7 +79,7 @@ qplot(x = time, y = year,
       scale_y_continuous(limits = c(20, 30))  
 ```
 
-<img src = 'image/marriageBoxplot.png', width = 600>
+<img src = 'image/marriageBoxplot.png'  width = '600'>
 
 - Create a frequency polygon:
 
